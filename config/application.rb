@@ -23,7 +23,7 @@ module ChatApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
-    config.action_cable.allowed_request_origins = ['http://localhost:8080']
+    config.action_cable.allowed_request_origins = ['http://localhost:3001']
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid, foreign_key_type: :uuid
     end

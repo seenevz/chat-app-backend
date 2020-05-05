@@ -1,10 +1,10 @@
 class ConversationsChannel < ApplicationCable::Channel
   def subscribed
     #This method runs every time a client subscribes to a channel, and when you use the broadast/broacast_to method
-
+    current_user = User.find(params[:user_id])
     # @conversation = Conversation.find(params[:conversation_id])
+    byebug
     stream_for current_user
-    # byebug
     # stream_from "conversations_channel"
 
   end

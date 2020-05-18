@@ -15,13 +15,10 @@ def text_brake(text)
   puts separator
 end
 
-text_brake('Clearing database')
-
-Message.destroy_all
-User.destroy_all
-Conversation.destroy_all
-
 text_brake('Start seeding')
+
+User.create(username:'username', password:'password', first_name:'first_name', last_name:'last_name')
+
 
 10.times do
   first_name = Faker::Name.first_name

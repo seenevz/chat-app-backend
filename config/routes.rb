@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   # resources :conversations, only: [:create]
 
   get '/find', to: 'users#find_user'
-  post '/login', to: 'auth#create'
+  post '/login', to: 'auth#login'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

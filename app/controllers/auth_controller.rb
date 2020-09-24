@@ -14,12 +14,15 @@ class AuthController < ApplicationController
 
   def logout
     cookies.delete(:logged_user)
+    render json: nil
   end
 
   def verify_user
     if authenticate_user
       set_cookies(@current_user.id)
       render json: @current_user, only: [ :username]
+    else
+      render json: nil
     end
   end
   

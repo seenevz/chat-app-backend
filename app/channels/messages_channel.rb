@@ -1,4 +1,4 @@
-class ConversationsChannel < ApplicationCable::Channel
+class MessagesChannel < ApplicationCable::Channel
   def subscribed
     #This method runs every time a client subscribes to a channel, and when you use the broadast/broacast_to method
     

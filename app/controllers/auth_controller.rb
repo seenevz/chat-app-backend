@@ -3,11 +3,7 @@ class AuthController < ApplicationController
     user = User.find_by(username: auth_params[:username])
 
     if user && user.authenticate(auth_params[:password])
-     cookies.encrypted[:logged_user] = {
-        value: user.id,
-        http_only: true,
-        same_site: 'Lax'
-      }
+     set_cookies(user.id)
 
       render json: user, only: [ :username]
     else  
@@ -19,8 +15,23 @@ class AuthController < ApplicationController
   def logout
     cookies.delete(:logged_user)
   end
+
+  def verify_user
+    if authenticate_user
+      set_cookies(@current_user.id)
+      render json: @current_user, only: [ :username]
+    end
+  end
   
   private
+
+  def set_cookies(user_id)
+    cookies.encrypted[:logged_user] = {
+        value: user_id,
+        http_only: true,
+        same_site: 'Lax'
+      }
+  end
 
   def auth_params
     params.require(:auth).permit(:username, :password)

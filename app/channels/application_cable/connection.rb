@@ -4,7 +4,7 @@ module ApplicationCable
 
     def connect
       self.current_user = verify_current_user
-      puts "hconnection established by #{current_user.username}"
+      puts "connection established by #{current_user.username}"
     end
 
     private

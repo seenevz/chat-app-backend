@@ -5,7 +5,7 @@ class AuthController < ApplicationController
     if user && user.authenticate(auth_params[:password])
      set_cookies(user.id)
 
-      render json: user, only: [ :username]
+      render json: user, only: [ :username, :id]
     else  
       render json: {error: "Username/Password is incorrect"}, status: 403
     end
@@ -20,7 +20,7 @@ class AuthController < ApplicationController
   def verify_user
     if authenticate_user
       set_cookies(@current_user.id)
-      render json: @current_user, only: [ :username]
+      render json: @current_user, only: [ :username, :id]
     else
       render json: nil
     end
@@ -32,7 +32,7 @@ class AuthController < ApplicationController
     cookies.encrypted[:logged_user] = {
         value: user_id,
         http_only: true,
-        same_site: 'Lax'
+        secure: true
       }
   end
 

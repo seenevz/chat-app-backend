@@ -17,8 +17,8 @@ end
 
 text_brake('Start seeding')
 
-User.create(username:'username', password:'password', first_name:'first_name', last_name:'last_name')
-
+test_user1 = User.create(username:'username', password:'password', first_name:'first_name', last_name:'last_name')
+test_user2 = User.create(username:'username2', password:'password', first_name:'first_name_again', last_name:'last_name_again')
 
 10.times do
   first_name = Faker::Name.first_name
@@ -39,7 +39,16 @@ end
 
 text_brake('Conversations generated')
 
-100.times do
+test_users = [test_user1, test_user2]
+
+10.times do
+  text = Faker::TvShows::MichaelScott.quote
+  user = test_users.sample
+  
+  Message.create(text: text, user: user, conversation: Conversation.first)
+end
+
+50.times do
   text = Faker::TvShows::MichaelScott.quote
   user = User.all.sample
   conversation = Conversation.all.sample

@@ -12,14 +12,13 @@ class ConversationsChannel < ApplicationCable::Channel
   def receive(data)
     # You can use the broadcast/broadcast_to method from both actioncable server and the channel class, represented here by self
     # ActionCable.server.broadcast('conversations_channel', data)
-    byebug
     self.broadcast_to('conversations_channel', data)
   end
 
   def create_conversation(data)
     
   end
-  
+
   def all_conversations
     
     conversations = current_user.conversations

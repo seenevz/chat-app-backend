@@ -17,8 +17,8 @@ end
 
 text_brake('Start seeding')
 
-test_user1 = User.create(username:'username', password:'password', first_name:'first_name', last_name:'last_name')
-test_user2 = User.create(username:'username2', password:'password', first_name:'first_name_again', last_name:'last_name_again')
+test_user1 = User.create(username:'username', password:'password', password_confirmation: 'password', first_name:'first_name', last_name:'last_name')
+test_user2 = User.create(username:'username2', password:'password', password_confirmation: 'password', first_name:'first_name_again', last_name:'last_name_again')
 
 10.times do
   first_name = Faker::Name.first_name
@@ -26,7 +26,7 @@ test_user2 = User.create(username:'username2', password:'password', first_name:'
   username = Faker::Internet.username(specifier: "#{first_name} #{last_name}", separators: %w(. _ -))
   password = 'testapp'
 
-  User.create(username:username, password:password, first_name:first_name, last_name:last_name)
+  User.create(username:username, password:password, password_confirmation:password, first_name:first_name, last_name:last_name)
 end
 
 text_brake('Users generated')

@@ -19,15 +19,15 @@ class MessagesChannel < ApplicationCable::Channel
   def create_message(data)
     new_message = Message.new(text: data["message"], conversation: @conversation, user: current_user)
     if new_message.save
-      self.broadcast_to(@conversation, [new_message])
+      self.broadcast_to(@conversation, {action:"create_message", payload: new_message})
     else
-      self.broadcast_to(@conversation, {error: "Couldn't save message"})
+      self.broadcast_to(@conversation, {action:"create_message", error: "Couldn't save message"})
     end
   end
   
   def all_messages
     messages = @conversation.messages
-    self.broadcast_to(current_user, messages)
+    self.broadcast_to(current_user, {action:"all_messages", payload: messages})
   end
 
   def unsubscribed

@@ -19,13 +19,16 @@ class ConversationsChannel < ApplicationCable::Channel
     
   end
 
-  def find_user(data)
-    user = user
+  def find_user_by_match(data)
+    usernames = User.arel_table[:username]
+    matches = User.where(usernames.matches("#{data}%")).select(:username)
+
+    self.broadcast_to(current_user, matches)
   end
 
   def all_conversations
-    
     conversations = current_user.conversations
+
     self.broadcast_to(current_user, conversations)
   end
 

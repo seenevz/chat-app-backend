@@ -19,6 +19,10 @@ class ConversationsChannel < ApplicationCable::Channel
     
   end
 
+  def find_user(data)
+    user = user
+  end
+
   def all_conversations
     
     conversations = current_user.conversations

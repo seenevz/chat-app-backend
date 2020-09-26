@@ -3,11 +3,23 @@ class AuthController < ApplicationController
     user = User.find_by(username: auth_params[:username])
 
     if user && user.authenticate(auth_params[:password])
-     set_cookies(user.id)
+      set_cookies(user.id)
 
-      render json: user, only: [ :username, :id]
+      render json: user, only: [ :username, :id, :first_name, :last_name]
     else  
       render json: {error: "Username/Password is incorrect"}, status: 403
+    end
+  end
+
+  def create
+    user = User.new(create_params)
+
+    if user.save
+      set_cookies(user.id)
+
+      render json: user, only: [ :username, :id, :first_name, :last_name]
+    else
+      render json: {error: user.errors.full_messages}, status: 422
     end
   end
 
@@ -38,5 +50,9 @@ class AuthController < ApplicationController
 
   def auth_params
     params.require(:auth).permit(:username, :password)
+  end
+
+  def create_params
+     params.require(:auth).permit(:username, :password, :password_confirmation, :first_name, :last_name)
   end
 end

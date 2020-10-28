@@ -41,10 +41,11 @@ class AuthController < ApplicationController
   private
 
   def set_cookies(user_id)
+    #secure attribute can only be set when https is setup
     cookies.encrypted[:logged_user] = {
         value: user_id,
         http_only: true,
-        secure: true
+        # secure: true,
       }
   end
 

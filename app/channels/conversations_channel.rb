@@ -17,10 +17,15 @@ class ConversationsChannel < ApplicationCable::Channel
 
   def create_conversation(data)
     user = User.find(data["message"])
+    check_conversation = current_user.has_conversation_with?(user)
 
-    new_conversation = Conversation.create(title: "New conversation by #{current_user.username}")
-    Message.create(text: "This is the beginning of your conversation with #{user.username}", conversation: new_conversation, user: current_user)
-    Message.create(text: "This is the beginning of your conversation with #{current_user.username}", conversation: new_conversation, user: user)
+    if check_conversation
+      new_conversation = check_conversation
+    else
+      new_conversation = Conversation.create(title: "New conversation by #{current_user.username}")
+      Message.create(text: "This is the beginning of your conversation with #{user.username}", conversation: new_conversation, user: current_user)
+      Message.create(text: "This is the beginning of your conversation with #{current_user.username}", conversation: new_conversation, user: user)
+    end
 
     self.broadcast_to(current_user, {action: "create_conversation", payload: new_conversation})
   end

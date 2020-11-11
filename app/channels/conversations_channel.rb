@@ -18,7 +18,6 @@ class ConversationsChannel < ApplicationCable::Channel
   def create_conversation(data)
     user = User.find(data["message"])
     check_conversation = current_user.has_conversation_with(user)
-
     if check_conversation
       new_conversation = check_conversation
     else

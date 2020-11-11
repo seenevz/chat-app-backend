@@ -8,11 +8,11 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true
 
   def conversations
-    self.messages.map{|m| m.conversation}.uniq
+    self.messages.reload.map(&:conversation).uniq
   end
 
-  def has_conversation_with?(user)
-    self.conversations.find{|c| c.users.includes(user)}
+  def has_conversation_with(user)
+    self.conversations.find{|c| c.users.uniq.include?(user)}
   end
 
 end
